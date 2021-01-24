@@ -5,7 +5,7 @@ $user_avatar = 'img/user.jpg';
 
 $categories = [
 	'boards' => 'Доски и лыжи',
-	'attachment' => 'Креплени',
+	'attachment' => 'Крепления',
 	'boots' => 'Ботинки',
 	'clothing' => 'Одежда',
 	'tools' => 'Инструменты',
