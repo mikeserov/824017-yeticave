@@ -13,8 +13,8 @@ CREATE TABLE lots (
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	dt_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	name VARCHAR(128),
-	description TEXT,
-	img_ref TEXT,
+	description TEXT(128),
+	img_ref TEXT(128),
 	start_price DECIMAL,
 	dt_end TIMESTAMP,
 	rate_step DECIMAL,
@@ -47,5 +47,5 @@ CREATE UNIQUE INDEX lot_id ON lots(id);
 CREATE UNIQUE INDEX user_id ON users(id);
 CREATE UNIQUE INDEX rate_id ON rates(id);
 
-CREATE INDEX lot_description ON lots(description);
+CREATE INDEX lot_description ON lots(description(128));
 CREATE INDEX lot_name ON lots(name);

@@ -2,9 +2,9 @@
 INSERT INTO categories (name) VALUES ("Доски и лыжи"), ("Крепления"), ("Ботинки"), ("Одежда"), ("Инструменты"), ("Разное");
 INSERT INTO users (email, name, password, avatar_ref, contacts, lot_id, rate_id)
 	VALUES ("iloveMassachusetts@yandex.ru", "Winston", "1234", "img/avatar.jpg", "+79999999999", 2, 1),
-		("iloveNew-York@yandex.ru", "Dave", "4321", "img/avatar_2.jpg", "+79998887700", 2, 2);
+		("iloveNew-York@yandex.ru", "Dave", "4321", "img/avatar_2.jpg", "+79998887700", 3, 2);
 
-INSERT INTO lots (name, desription, img_ref, start_price, rate_step, category_id, author)
+INSERT INTO lots (name, description, img_ref, start_price, rate_step, category_id, author)
 	VALUES ("2014 Rossignol District Snowboard", "Супер сноуборд", "img/lot-1.jpg", 10999, 5, 1, 1),
 		("DC Ply Mens 2016/2017 Snowboard", "Очень подробное описание", "img/lot-2.jpg", 159999, 5, 1, 2),
 		("Крепления Union Contact Pro 2015 года размер L/XL", "Очень подробное описание", "img/lot-3.jpg", 8000, 5, 2, 2),
@@ -22,12 +22,12 @@ SELECT * FROM categories;
 SELECT l.name, start_price, img_ref, c.name FROM * lots l
  	JOIN categories c
  		ON l.category_id = c.id
-	WHERE date_end > CURRENT_TIMESTAMP
+	WHERE dt_end > CURRENT_TIMESTAMP
 	ORDER BY dt_start DESC
 	LIMIT 3;
 
 /*показать лот по его id. Получите также название категории, к которой принадлежит лот*/
-SELECT l.name c.name FROM lots
+SELECT l.name, c.name FROM lots
 	JOIN categories c
 		ON l.category_id = c.id
 	WHERE l.id = 6;
