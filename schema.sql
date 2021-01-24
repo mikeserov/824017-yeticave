@@ -25,7 +25,7 @@ CREATE TABLE lots (
 
 CREATE TABLE rates (
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
-	dt_rate_declare TIMESTAMP,
+	dt_rate_declare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	rate DECIMAL,
 	user_id INT REFERENCES users(id),
 	lot_id INTEGER REFERENCES lots(id)
@@ -43,11 +43,9 @@ CREATE TABLE users (
 	rate_id INT REFERENCES rates(id)
 );
 
-INSERT INTO categories (NAME) VALUES ("Доски и лыжи"), ("Крепления"), ("Ботинки"), ("Одежда"), ("Инструменты"), ("Разное"); 
-SELECT * FROM categories;
+CREATE UNIQUE INDEX lot_id ON lots(id);
+CREATE UNIQUE INDEX user_id ON users(id);
+CREATE UNIQUE INDEX rate_id ON rates(id);
 
-/*CREATE UNIQUE*/
-
-
-
-
+CREATE INDEX lot_description ON lots(description);
+CREATE INDEX lot_name ON lots(name);
