@@ -5,13 +5,10 @@ function include_template($name, $data) {
     if (!file_exists($name)) {
         return $result;
     }
-
     ob_start();
     extract($data);
     require $name;
-
     $result = ob_get_clean();
-
     return $result;
 }
 

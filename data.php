@@ -3,16 +3,16 @@ $is_auth = rand(0, 1);
 $user_name = 'Михаил Серов'; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
 
-$categories = [
+/*$categories = [
 	'boards' => 'Доски и лыжи',
 	'attachment' => 'Крепления',
 	'boots' => 'Ботинки',
 	'clothing' => 'Одежда',
 	'tools' => 'Инструменты',
 	'other' => 'Разное'
-];
+];*/
 
-$lots = array(
+/*$lots = array(
                 array('name' => '2014 Rossignol District Snowboard',
                     'category' => 'Доски и лыжи',
                     'price' => 10999,
@@ -37,5 +37,6 @@ $lots = array(
                     'category' => 'Разное',
                     'price' => 5400,
                     'URL' => 'img/lot-6.jpg')
-            );
+            );*/
 $title = 'Главная';
+$rm_time = remaining_time();

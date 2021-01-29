@@ -6,7 +6,8 @@ USE yeti_cave;
 
 CREATE TABLE categories (
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(30) UNIQUE
+	name_ru VARCHAR(30) UNIQUE,
+	name_en VARCHAR(30) UNIQUE 
 );
 
 CREATE TABLE lots (

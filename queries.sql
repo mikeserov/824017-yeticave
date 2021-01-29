@@ -1,5 +1,5 @@
 
-INSERT INTO categories (name) VALUES ("Доски и лыжи"), ("Крепления"), ("Ботинки"), ("Одежда"), ("Инструменты"), ("Разное");
+INSERT INTO categories (name_ru, name_en) VALUES ("Доски и лыжи", "boards"), ("Крепления", "attachment"), ("Ботинки", "boots"), ("Одежда", "clothing"), ("Инструменты", "tools"), ("Разное", "other");
 INSERT INTO users (email, name, password, avatar_ref, contacts, lot_id, rate_id)
 	VALUES ("iloveMassachusetts@yandex.ru", "Winston", "1234", "img/avatar.jpg", "+79999999999", 2, 1),
 		("iloveNew-York@yandex.ru", "Dave", "4321", "img/avatar_2.jpg", "+79998887700", 3, 2);
@@ -16,14 +16,16 @@ INSERT INTO rates (rate, user_id, lot_id)
 	VALUES (190000, 1, 2),
 		(240000, 2, 2);
 
+
+
 SELECT * FROM categories;
 
 /*получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;*/
-SELECT l.name, start_price, img_ref, c.name FROM * lots l
+SELECT l.name, start_price, img_ref, c.name_ru FROM lots l
  	JOIN categories c
  		ON l.category_id = c.id
-	WHERE dt_end > CURRENT_TIMESTAMP
-	ORDER BY dt_start DESC
+	/*WHERE 	 > CURRENT_TIMESTAMP
+	ORDER BY dt_start DESC   (ПОКА НЕ РЕАЛИЗОВАНО!)*/
 	LIMIT 3;
 
 /*показать лот по его id. Получите также название категории, к которой принадлежит лот*/
