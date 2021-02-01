@@ -10,7 +10,7 @@ if (!$link) {
 	if (! mysqli_set_charset($link, "utf8")) {
 		print('Кодировка не установлена, ошибка №' .mysqli_errno($link). ': '.mysqli_error($link).'<br>');
 	} else {
-		$res = mysqli_query($link, 'SELECT l.name, start_price AS price, img_ref AS URL, c.name_ru AS category FROM lots l '
+		$res = mysqli_query($link, 'SELECT l.id, l.name, start_price AS price, img_ref AS URL, c.name_ru AS category FROM lots l '
 			. 'JOIN categories c ON l.category_id = c.id '
 			/*WHERE 	 > CURRENT_TIMESTAMP (РЕАЛИЗОВАТЬ К ПОСЛЕДНЕМУ УРОКУ!)
 			ORDER BY dt_start DESC   (РЕАЛИЗОВАТЬ К ПОСЛЕДНЕМУ УРОКУ!)*/
