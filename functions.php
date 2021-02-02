@@ -38,17 +38,18 @@ function show_connection_error () {
     global $title;
     $error_number = 'Ошибка соединения №' . mysqli_connect_errno() . ': ';
     $error_message = mysqli_connect_error();
-    $content = include_template('error.php', [
+    $page_content = include_template('error.php', [
         'error_number' => $error_number,
         'error_message' => $error_message,
         'categories' => []
     ]);
-    $layout = include_template('layout.php', [
+    $layout_content = include_template('layout.php', [
         'categories' => [],
-        'content' => $content,
-        'title' => $title
+        'page_content' => $page_content,
+        'title' => $title,
+        'main_container' => 'container'
     ]);
-    return $layout;
+    return $layout_content;
 }
 
 function show_error () {
@@ -56,17 +57,18 @@ function show_error () {
     global $title;
     $error_number = 'Ошибка №' . mysqli_errno($link) . ': ';
     $error_message = mysqli_error($link);
-    $content = include_template('error.php', [
+    $page_content = include_template('error.php', [
         'error_number' => $error_number,
         'error_message' => $error_message,
         'categories' => []
     ]);
-    $layout = include_template('layout.php', [
+    $layout_content = include_template('layout.php', [
         'categories' => [],
-        'content' => $content,
-        'title' => $title
+        'page_content' => $page_content,
+        'title' => $title,
+        'main_container' => 'container'
     ]);
-    return $layout;
+    return $layout_content;
 }
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных

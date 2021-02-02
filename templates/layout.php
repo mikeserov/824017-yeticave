@@ -29,8 +29,8 @@
     </div>
 </header>
 
-<main class="container">
-    <?= $content; ?>
+<main class="<?= $main_container; ?>">
+    <?= $page_content; ?>
 </main>
 </div>
 

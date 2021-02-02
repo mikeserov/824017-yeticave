@@ -6,5 +6,4 @@ if (!$link) {
 	if (! mysqli_set_charset($link, "utf8")) {
 		exit(show_error());
 	}
-} 
-?>
+}

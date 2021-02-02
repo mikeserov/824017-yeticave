@@ -11,15 +11,16 @@ $res = mysqli_query($link, 'SELECT l.id, l.name, start_price AS price, img_ref A
 $lots = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $res = mysqli_query($link, 'SELECT * FROM categories');
 $categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$content = include_template('main.php', [
+$page_content = include_template('main.php', [
 	'categories' => $categories,
 	'lots' => $lots,
 	'rm_time' => $rm_time
 ]);
 
-$layout = include_template('layout.php', [
+$layout_content = include_template('layout.php', [
 	'categories' => $categories,
-	'content' => $content,
-	'title' => $title
+	'page_content' => $page_content,
+	'title' => $title,
+	'main_container' => 'container'
 ]);
-print($layout);
+print($layout_content);
