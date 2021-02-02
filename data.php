@@ -2,7 +2,7 @@
 $is_auth = rand(0, 1);
 $user_name = 'Михаил Серов'; // укажите здесь ваше имя
 $user_avatar = 'img/user.jpg';
-
+$categories = [];
 /*$categories = [
 	'boards' => 'Доски и лыжи',
 	'attachment' => 'Крепления',
@@ -38,5 +38,4 @@ $user_avatar = 'img/user.jpg';
                     'price' => 5400,
                     'URL' => 'img/lot-6.jpg')
             );*/
-$title = 'Главная';
 $rm_time = remaining_time();
