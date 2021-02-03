@@ -113,3 +113,19 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
     return $stmt;
 }
+
+function validateLength($value, $min, $max) {
+    if ($value) {
+        $len = strlen($value);
+        if($len < $min or $len > $max) {
+            return "Значение должно быть от $min до $max символов";
+        }
+    return null;
+}
+
+function validateCategory($id, $allowed_list) {
+    if (!in_array($id, $allowed_list)) {
+        return "Указана несуществующая категория";
+    }
+    return null;
+}
