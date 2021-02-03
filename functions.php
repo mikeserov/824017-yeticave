@@ -70,15 +70,7 @@ function show_error () {
     ]);
     return $layout_content;
 }
-/**
- * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
- *
- * @param $link mysqli Ресурс соединения
- * @param $sql string SQL запрос с плейсхолдерами вместо значений
- * @param array $data Данные для вставки на место плейсхолдеров
- *
- * @return mysqli_stmt Подготовленное выражение
- */
+
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -120,12 +112,17 @@ function validateLength($value, $min, $max) {
         if($len < $min or $len > $max) {
             return "Значение должно быть от $min до $max символов";
         }
+    }
     return null;
 }
 
 function validateCategory($id, $allowed_list) {
-    if (!in_array($id, $allowed_list)) {
+    if (!in_array($id, $allowed_list) && isset($id)) {
         return "Указана несуществующая категория";
     }
     return null;
+}
+
+function getPostVal($name) {
+    return filter_input(INPUT_POST, $name);
 }
