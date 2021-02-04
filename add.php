@@ -31,10 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		},
 		'description' => function($value) {
 			return validateLength($value, 10, 3000);
+		},
+		'lot_rate' => function($value) {
+			return validateType($value);
+		},
+		'lot_step' => function($value) {
+			return validateType($value);
 		}
 	];
 	$new_lot = filter_input_array(INPUT_POST, ['lot_name' => FILTER_DEFAULT, 'category' => FILTER_DEFAULT, 'description' => FILTER_DEFAULT, 'lot_rate' => FILTER_DEFAULT, 'lot_step' => FILTER_DEFAULT, 'lot_date' => FILTER_DEFAULT], true);
-	//спросить у наставника нужен ли здесь фильтр FILTER_SANITIZE_FULL_SPECIAL_CHARS и FILTER_VALIDATE_INT(FLOAT)
+	//спросить у наставника нужен ли здесь фильтр FILTER_SANITIZE_FULL_SPECIAL_CHARS
 	foreach($new_lot as $key => $value) {
 		if(isset($rules[$key])) {
 			$rule = $rules[$key];
@@ -51,13 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$filename = uniqid() . '.jpg';
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$file_type = finfo_file($finfo, $tmp_name);
-		//var_dump($_FILES);
 		if ($file_type !== "image/jpeg") {
 			$errors['lot_img'] = 'Загрузите фото лота в формате JPG';
 		} else {
-			move_uploaded_file($tmp_name, 'img/' . $filename);
-			$new_lot['img_ref'] = 'img/' . $filename;
-		}
+			if (!count($errors)) {
+				move_uploaded_file($tmp_name, 'img/' . $filename);
+				$new_lot['img_ref'] = 'img/' . $filename;
+			} else {
+				//$new_lot['img_ref'] = $tmp_name; /*СПРОСИТЬ У ОПЫТНОГО ЧЕЛОВЕКА, ПОЧЕМУ $tmp_name не открывается в браузере? потомучто картинка в таком случае лежит не в папке сайта?.. */
+				move_uploaded_file($tmp_name, 'temporary_files/' . $filename);
+				$new_lot['img_ref'] = 'temporary_files/' . $filename;
+			}
+		} 
 	} else {
 		$errors['lot_img'] = 'Вы не загрузили файл';
 	}
@@ -68,6 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			'categories' => $categories,
 			'required' => $required_attr
 		]);
+
+
 	} else {
 		$sql = 'INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img_ref) '
 			. 'VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';
@@ -92,5 +105,3 @@ $layout_content = include_template('layout.php', [
 	'main_container' => ''
 ]);
 print($layout_content);
-var_dump($errors);
-

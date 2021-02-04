@@ -123,6 +123,13 @@ function validateCategory($id, $allowed_list) {
     return null;
 }
 
+function validateType($value) {
+    if(!is_numeric($value)) {
+        return "Введите значение в числовом формате";
+    }
+    return null;
+}
+
 function getPostVal($name) {
     return filter_input(INPUT_POST, $name);
 }

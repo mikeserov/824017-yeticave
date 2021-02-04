@@ -25,6 +25,7 @@
             <?php foreach($categories as $cat): ?>
               <option value="<?= $cat['id']; ?>" <?php if ($cat['id'] == getPostVal('category')): ?>selected<?php endif; ?>><?= $cat['name_ru']; ?></option>
             <?php endforeach; ?>
+            <!--проверка отображения ошибки в случае несуществующей категории <option value="99">пирожные</option> -->
           </select>
           <span class="form__error"><?= isset($errors['category']) ? $errors['category'] : ''; ?></span>
         </div>
@@ -35,34 +36,56 @@
         <textarea id="description" name="description" placeholder="Напишите описание лота" <?= $required; ?>><?= isset($new_lot['description']) ? $new_lot['description'] : ''; ?></textarea>
         <span class="form__error"><?= isset($errors['description']) ? $errors['description'] : ''; ?></span>
       </div>
-      <div class="form__item form__item--file"> <!-- form__item--uploaded -->
+      <?php if (isset($errors)) {
+        if (isset($errors['lot_img'])) {
+          $classname = 'form__item--file';
+        } else {
+          $classname = 'form__item--uploaded';
+        }
+      } else {
+        $classname = 'form__item--file';
+      } ?>
+      <div class="form__item <?= $classname; ?>"> <!-- form__item--uploaded -->
         <label>Изображение</label>
         <div class="preview">
           <button class="preview__remove" type="button">x</button>
           <div class="preview__img">
-            <img src="img/avatar.jpg" width="113" height="113" alt="Изображение лота">
+            <img src="<?= isset($errors['lot_img']) ? '' : $new_lot['img_ref']; ?>" width="113" height="113" alt="Изображение лота">
           </div>
         </div>
-        <?php $classname = isset($errors['lot_img']) ? 'form__item--invalid' : ''; ?>
-        <div class="form__input-file <?= $classname; ?>">
+        <div class="form__input-file">
           <input class="visually-hidden" name = "lot_img" type="file" id="photo2" value="">
           <label for="photo2">
-            <span><?= isset($errors['lot_img']) ? $errors['lot_img'] . '<br>' : '';?>+ Добавить</span>
+            <?php if (isset($errors)) {
+                    if (isset($errors['lot_img'])) {
+                      $span_msg = '+ Добавить';
+                    } else {
+                      $span_msg = '';
+                    }
+                  } else {
+                    $span_msg = '+ Добавить';
+                  } ?>
+            <span <?= isset($errors['lot_img']) ? 'style="border-color: #f84646;"' : '' ?>><?= $span_msg; ?></span>
           </label>
+        <?php if (isset($errors['lot_img'])): ?>  
+        <span style="width: 200px; font-size: 11px; color: #f84646; position: absolute; top: 105px;">
+          <?= $errors['lot_img']; ?>
+        </span>
+      <?php endif; ?>
         </div>
       </div>
       <div class="form__container-three">
         <?php $classname = isset($errors['lot_rate']) ? 'form__item--invalid' : ''; ?>
         <div class="form__item form__item--small <?= $classname; ?>">
           <label for="lot_rate">Начальная цена</label>
-          <input id="lot_rate" type="number" name="lot_rate" placeholder="0" value="<?= isset($new_lot['lot_rate']) ? $new_lot['lot_rate'] : ''; ?>" <?= $required; ?>>
-          <span class="form__error"><?= isset($errors['lot_rate']) ? $errors['lot_rate'] : ''; ?></span>
+          <input id="lot_rate" type="text" name="lot_rate" placeholder="0" value="<?= isset($new_lot['lot_rate']) ? $new_lot['lot_rate'] : ''; ?>" <?= $required; ?>>
+          <span class="form__error" style="line-height: 15px;"><?= isset($errors['lot_rate']) ? $errors['lot_rate'] : ''; ?></span>
         </div>
         <?php $classname = isset($errors['lot_step']) ? 'form__item--invalid' : ''; ?>
         <div class="form__item form__item--small <?= $classname; ?>">
           <label for="lot_step">Шаг ставки</label>
-          <input id="lot_step" type="number" name="lot_step" placeholder="0" value="<?= isset($new_lot['lot_step']) ? $new_lot['lot_step'] : ''; ?>" <?= $required; ?>>
-          <span class="form__error"><?= isset($errors['lot_step']) ? $errors['lot_step'] : ''; ?></span>
+          <input id="lot_step" type="text" name="lot_step" placeholder="0" value="<?= isset($new_lot['lot_step']) ? $new_lot['lot_step'] : ''; ?>" <?= $required; ?>>
+          <span class="form__error" style="line-height: 15px;"><?= isset($errors['lot_step']) ? $errors['lot_step'] : ''; ?></span>
         </div>
         <?php $classname = isset($errors['lot_date']) ? 'form__item--invalid' : ''; ?>
         <div class="form__item <?= $classname; ?>">
