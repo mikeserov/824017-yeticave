@@ -14,3 +14,44 @@
 			/*WHERE 	 > CURRENT_TIMESTAMP (ПОКА НЕ РЕАЛИЗОВАНО!)
 			ORDER BY dt_start DESC   (ПОКА НЕ РЕАЛИЗОВАНО!)*/
 			. 'LIMIT 6');
+
+
+<?php
+class User {
+	// Хранение опций пароля для совместного использования при хешировании и повторном хешировании:
+	const HASH = PASSWORD_DEFAULT;
+	const COST = 14;
+	// Внутреннее хранение данных о пользователе:
+	public $data; 
+	// Макет конструктора:
+	public function __construct() {
+		// Чтение данных из базы данных, сохранение данных в $data:
+		$data->passwordHash and $data->username $this->data = new stdClass();
+		$this->data->passwordHash = 'dbd014125a4bad51db85f27279f1040a';
+	}
+
+	// Макет функциональности сохранения
+	public function save() {
+		// Сохранение данных из $data обратно в базу данных
+	}
+	// Разрешение изменения нового пароля:
+	public function setPassword($password) {
+		$this->data->passwordHash = password_hash($password, self::HASH, ['cost' => self::COST]);
+	} 
+	// Логика для регистрации входа пользователя:
+	public function login($password) {
+		// Сначала проверка правильности введенного пользователем пароля:
+		echo "Login: ", $this->data->passwordHash, "\n";
+		if (password_verify($password, $this->data->passwordHash)) {
+			 // Успех - теперь проверка пароля на необходимость повторного хеширования
+			if (password_needs_rehash($this->data->passwordHash, self::HASH, ['cost' => self::COST])) {
+	 			// Нам нужно повторно создать хеш пароля и сохранить его. Вызов
+	 			setPassword $this->setPassword($password);
+	 			$this->save(); 
+	 		}
+			return true;
+			// Или сделайте то, что вам нужно, чтобы пометить пользователя как успешно вошедшего в систему.
+		}
+		return false;
+	}
+} 

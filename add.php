@@ -79,8 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			'categories' => $categories,
 			'required' => $required_attr
 		]);
-
-
 	} else {
 		$sql = 'INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img_ref) '
 			. 'VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';

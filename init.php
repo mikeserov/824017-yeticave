@@ -7,3 +7,5 @@ if (!$link) {
 		exit(show_error());
 	}
 }
+$categories = [];
+$page_content = '';
