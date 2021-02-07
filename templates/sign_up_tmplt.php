@@ -1,33 +1,38 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $value): ?>
+        <?php foreach($categories as $cat): ?>
           <li class="nav__item">
-            <a href="all-lots.html"><?= $value['name_ru']; ?></a>
+            <a href="all-lots.html"><?= $cat['name_ru']; ?></a>
           </li>
         <?php endforeach; ?>
       </ul>
     </nav>
-    <form class="form container" action="sign_up.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+    <?php $classname = isset($errors) ? 'form--invalid' : ''; ?>
+    <form class="form container <?= $classname; ?>" action="sign_up.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Регистрация нового аккаунта</h2>
-      <div class="form__item"> <!-- form__item--invalid -->
+      <?php $classname = isset($errors['email']) ? 'form__item--invalid' : ''; ?>
+      <div class="form__item <?= $classname; ?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
-        <input id="email" type="text" name="email" placeholder="Введите e-mail" <?= $required; ?>>
-        <span class="form__error">Введите e-mail</span>
+        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= $values['email'] ?? ''; ?>" <?= $required; ?>>
+        <span class="form__error"><?= $classname ? $errors['email'] : ''; ?></span>
       </div>
-      <div class="form__item">
+      <?php $classname = isset($errors['password']) ? 'form__item--invalid' : ''; ?>
+      <div class="form__item <?= $classname; ?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="password" placeholder="Введите пароль" <?= $required; ?>>
-        <span class="form__error">Введите пароль</span>
+        <input id="password" type="password" name="password" placeholder="Введите пароль" <?= $required; ?>>
+        <span class="form__error"><?= $classname ? 'Введите пароль' : ''; ?></span>
       </div>
-      <div class="form__item">
+      <?php $classname = isset($errors['name']) ? 'form__item--invalid' : ''; ?>
+      <div class="form__item <?= $classname; ?>">
         <label for="name">Имя*</label>
-        <input id="name" type="text" name="name" placeholder="Введите имя" <?= $required; ?>>
-        <span class="form__error">Введите имя</span>
+        <input id="name" type="text" name="name" placeholder="Введите имя" <?= $required; ?> value="<?= $values['name'] ?? ''; ?>">
+        <span class="form__error"><?= $classname ? 'Введите имя' : ''; ?></span>
       </div>
-      <div class="form__item">
+      <?php $classname = isset($errors['message']) ? 'form__item--invalid' : ''; ?>
+      <div class="form__item <?= $classname; ?>">
         <label for="message">Контактные данные*</label>
-        <textarea id="message" name="message" placeholder="Напишите как с вами связаться" <?= $required; ?>></textarea>
-        <span class="form__error">Напишите как с вами связаться</span>
+        <textarea id="message" name="message" placeholder="Напишите как с вами связаться" <?= $required; ?>><?= $values['message'] ?? ''; ?></textarea>
+        <span class="form__error"><?= $classname ? 'Напишите как с вами связаться' : ''; ?></span>
       </div>
       <div class="form__item form__item--file form__item--last">
         <label>Аватар</label>
@@ -42,9 +47,14 @@
           <label for="photo2">
             <span>+ Добавить</span>
           </label>
+          <?php if (isset($errors['photo2'])): ?>  
+            <span style="width: 200px; font-size: 11px; color: #f84646; position: absolute; top: 105px;">
+              <?= $errors['photo2']; ?>
+            </span>
+          <?php endif; ?>
         </div>
       </div>
       <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
       <button type="submit" class="button">Зарегистрироваться</button>
-      <a class="text-link" href="#">Уже есть аккаунт</a>
+      <a class="text-link" href="sign_in.php">Уже есть аккаунт</a>
     </form>

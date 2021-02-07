@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	];
 	$new_lot = filter_input_array(INPUT_POST, ['lot_name' => FILTER_DEFAULT, 'category' => FILTER_DEFAULT, 'description' => FILTER_DEFAULT, 'lot_rate' => FILTER_DEFAULT, 'lot_step' => FILTER_DEFAULT, 'lot_date' => FILTER_DEFAULT], true);
 	//спросить у наставника нужен ли здесь фильтр FILTER_SANITIZE_FULL_SPECIAL_CHARS
+	var_dump($new_lot);
 	foreach($new_lot as $key => $value) {
 		if(isset($rules[$key])) {
 			$rule = $rules[$key];

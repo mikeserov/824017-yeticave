@@ -22,9 +22,14 @@
         <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
         <nav class="user-menu">
-
-        <!-- здесь должен быть PHP код для показа аватара пользователя -->
-
+            <ul class="user-menu__list">
+                <li class="user-menu__item">
+                    <a href="sign_up.php">Регистрация</a>
+                </li>
+                <li class="user-menu__item">
+                    <a href="sign_in.php">Вход</a>
+                </li>
+            </ul>
         </nav>
     </div>
 </header>
