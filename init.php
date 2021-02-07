@@ -1,4 +1,5 @@
 <?php
+session_start();
 $link = mysqli_connect("localhost", "root", "root", "yeti_cave");
 if (!$link) {
 	exit(show_connection_error());

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$filename = $_FILES['photo2']['name'];
 		$get_format = explode(".", $filename);
 		$format = end($get_format);
-		$filename = uniqid() . $format;
+		$filename = uniqid() . '.' . $format;
 		$file_type = mime_content_type($tmp_name);
 		if ($file_type == "image/jpeg" or $file_type == "image/png") {
 			if (!count($errors)) {

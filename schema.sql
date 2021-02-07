@@ -37,7 +37,7 @@ CREATE TABLE users (
 	dt_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	email VARCHAR(128),
 	name VARCHAR(128),
-	PASSWORD VARCHAR(64),
+	password VARCHAR(64),
 	avatar_ref TEXT,
 	contacts TEXT,
 	lot_id INT REFERENCES lots(id),

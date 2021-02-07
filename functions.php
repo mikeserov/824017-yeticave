@@ -52,10 +52,10 @@ function show_connection_error () {
     return $layout_content;
 }
 
-function show_error () {
+function show_error ($errno = null, $error = null) {
     global $link;
     global $title;
-    $error_number = 'Ошибка №' . mysqli_errno($link) . ': ';
+    $error_number = 'Ошибка №' .  ?? mysqli_errno($link) . ': ';
     $error_message = mysqli_error($link);
     $page_content = include_template('error.php', [
         'error_number' => $error_number,

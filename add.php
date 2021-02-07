@@ -9,6 +9,7 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 	$categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
 	$cats_ids = array_column($categories, 'id');
 }
+if (isset($_SESSION['user'])) {
 $required_attr = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
