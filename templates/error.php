@@ -1,4 +1,3 @@
-    <main>
         <nav class="nav">
             <ul class="nav__list container">
                 <?php foreach($categories as $value): ?>
@@ -12,4 +11,3 @@
             <h2><?= $error_number; ?></h2>
             <p><?= $error_message; ?></p>
         </section>
-    </main>

@@ -52,21 +52,21 @@ function show_connection_error () {
     return $layout_content;
 }
 
-function show_error ($errno = null, $error = null) {
+function show_error ($errno = null, $error = null, $categories = []) {
     global $link;
     global $title;
-    $error_number = 'Ошибка №' .  ?? mysqli_errno($link) . ': ';
-    $error_message = mysqli_error($link);
+    $error_number = 'Ошибка №' . ($errno ?? mysqli_errno($link)) . ': ';
+    $error_message = $error ?? mysqli_error($link);
     $page_content = include_template('error.php', [
         'error_number' => $error_number,
         'error_message' => $error_message,
-        'categories' => []
+        'categories' => $categories
     ]);
     $layout_content = include_template('layout.php', [
-        'categories' => [],
+        'categories' => $categories,
         'page_content' => $page_content,
         'title' => $title,
-        'main_container' => 'container'
+        'main_container' => ''
     ]);
     return $layout_content;
 }
