@@ -26,17 +26,17 @@
               <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
                   <span class="lot-item__amount">Текущая цена</span>
-                  <span class="lot-item__cost"><?= show_price(esc($lot_info['price'])); ?></span>
+                  <span class="lot-item__cost"><?= my_number_format(esc($lot_info['current_price'])); ?></span>
                 </div>
                 <div class="lot-item__min-cost">
-                  Мин. ставка <span>12 000 р</span>
+                  Мин. ставка <span><?= my_number_format(esc($lot_info['min_valid_rate'])); ?></span>
                 </div>
               </div>
-              <form class="lot-item__form" action="new_rate.php" method="post">
+              <form class="lot-item__form" action="lot.php" method="post">
                 <?php $classname = empty($error) ? '' : 'form__item--invalid'; ?>
                 <p class="lot-item__form-item form__item <?= $classname; ?>">
                   <label for="cost">Ваша ставка</label>
-                  <input id="cost" type="text" name="cost" placeholder="12 000">
+                  <input id="cost" type="text" name="cost" placeholder="<?= esc($lot_info['min_valid_rate']); ?>">
                   <span class="form__error">Введите значение ставки</span>
                 </p>
                 <button type="submit" class="button">Сделать ставку</button>

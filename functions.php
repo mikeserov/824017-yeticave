@@ -12,7 +12,7 @@ function include_template($name, $data) {
     return $result;
 }
 
-function show_price ($price_of_a_lot) {
+function my_number_format ($price_of_a_lot) {
     if ($price_of_a_lot > 1000) {
         $price_of_a_lot = number_format(ceil($price_of_a_lot), 0, ',', ' ');
     }
