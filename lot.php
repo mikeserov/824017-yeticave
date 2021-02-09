@@ -8,6 +8,8 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 } else {
 	$categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
 }
+$lot_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$form_error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!isset($_SESSION['user'])) {
@@ -15,36 +17,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		if (empty($_POST['cost'])) {
 			$form_error = 'Введите значение ставки';
-			require_once('lot.php');
-			exit;
 		} else {
 			$res = mysqli_query($link, 'SELECT IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate FROM lots '
 				.'LEFT JOIN rates ON rates.lot_id = lots.id '
-				."WHERE lots.id = '$id' "
+				."WHERE lots.id = '$lot_id' "
 				.'ORDER BY rate DESC '
 				.'LIMIT 1');
-				$min_valid_rate = mysqli_fetch_assoc($res)['min_valid_rate'];
-			if (!filter_input(INPUT_POST, 'cost', FILTER_VALIDATE_INT, ['options' => ['min_range' => $min_valid_rate]])) {
+			$min_valid_rate = mysqli_fetch_assoc($res)['min_valid_rate'];
+			$new_rate = filter_input(INPUT_POST, 'cost', FILTER_VALIDATE_INT, ['options' => ['min_range' => $min_valid_rate]]);
+			if (!$new_rate) {
 				$form_error = 'Введите целое значение не менее чем мин. ставка';
-				require_once('lot.php');
+			} else {
+				//$sql = "INSERT INTO rates (rate, user_id, lot_id) VALUES (280000, 3, 2)";
+				/*$sql = "SELECT gifs.id, title, path, description, show_count, like_count, users.name FROM gifs "
+                 . "JOIN users ON gifs.user_id = users.id "
+                 . "WHERE category_id = " . $gif['category_id'] . " LIMIT 3";*/
+                 var_dump($sql);
+				//$sql = "INSERT INTO rates (rate, user_id, lot_id) VALUES (280000, 3, 2)";
+				//$res = mysqli_query($link, $sql);
+				;
+			}
 		}
 	}
 }
 
-}
-
-
-
-$form_error = '';
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $res = mysqli_query($link, 'SELECT l.id, description, name, start_price, img_ref AS URL, c.name_ru AS category, rate_step, rate AS max_rate_added, '
 	.'IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate FROM lots l '
 		.'JOIN categories c ON l.category_id = c.id '
 		.'LEFT JOIN rates ON rates.lot_id = l.id '
-		."WHERE l.id = '$id' "
+		."WHERE l.id = '$lot_id' "
 		.'ORDER BY rate DESC '
 		.' LIMIT 1');
-if ($id && mysqli_num_rows($res)) {
+if ($lot_id && mysqli_num_rows($res)) {
 	$lot_info = mysqli_fetch_assoc($res);
 	$tpl_data = [
 		'categories' => $categories,

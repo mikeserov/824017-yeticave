@@ -32,7 +32,7 @@
                   Мин. ставка <span><?= my_number_format(esc($lot_info['min_valid_rate'])); ?></span>
                 </div>
               </div>
-              <form class="lot-item__form" action="lot.php" method="post">
+              <form class="lot-item__form" action="lot.php?id=2" method="post">
                 <?php $classname = empty($error) ? '' : 'form__item--invalid'; ?>
                 <p class="lot-item__form-item form__item <?= $classname; ?>">
                   <label for="cost">Ваша ставка</label>
