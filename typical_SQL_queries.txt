@@ -94,3 +94,5 @@ ON Employee (Employee_Name);
 
 CREATE INDEX name_index
 ON Employee (Employee_Name, Employee_Age)
+
+ALTER TABLE `users` CHANGE COLUMN `PASSWORD` `password` VARCHAR(64);

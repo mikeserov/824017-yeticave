@@ -15,5 +15,7 @@ if (!isset($_SESSION['user'])) {
 		$referer_array = explode('=', $_SERVER['HTTP_REFERER']);
 		$id = intval($referer_array[1]);
 		require_once('lot.php');
+	} else {
+		if ()
 	}
 }
