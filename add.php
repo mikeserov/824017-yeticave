@@ -84,8 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			'required' => $required_attr
 		]);
 	} else {
-		$sql = 'INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img_ref) '
-			. 'VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';
+		$id = $_SESSION['user']['id'];
+		$sql = "INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img_ref) "
+			. "VALUES (NOW(), '$id', ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = db_get_prepare_stmt($link, $sql, $new_lot);
 		$res = mysqli_stmt_execute($stmt);
 		if ($res) {

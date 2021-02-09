@@ -7,8 +7,11 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 	exit(show_error());
 } else {
 	$categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
-} 
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+}
+if (!isset($id)) {
+	$form_error = '';
+	$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+}
 $res = mysqli_query($link, 'SELECT l.id, description, name, start_price AS price, img_ref AS URL, c.name_ru AS category FROM lots l '
 	. 'JOIN categories c ON l.category_id = c.id '
 	. 'WHERE l.id = ' . $id);
@@ -17,7 +20,8 @@ if ($id && mysqli_num_rows($res)) {
 	$page_content = include_template('lot_info.php', [
 		'categories' => $categories,
 		'lot_info' => $lot_info,
-		'rm_time' => $rm_time
+		'rm_time' => $rm_time,
+		'error' => $form_error
 	]);
 	$layout_content = include_template('layout.php', [
 		'categories' => $categories,

@@ -32,11 +32,12 @@
                   Мин. ставка <span>12 000 р</span>
                 </div>
               </div>
-              <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-                <p class="lot-item__form-item form__item form__item--invalid">
+              <form class="lot-item__form" action="new_rate.php" method="post">
+                <?php $classname = empty($error) ? '' : 'form__item--invalid'; ?>
+                <p class="lot-item__form-item form__item <?= $classname; ?>">
                   <label for="cost">Ваша ставка</label>
                   <input id="cost" type="text" name="cost" placeholder="12 000">
-                  <span class="form__error">Введите наименование лота</span>
+                  <span class="form__error">Введите значение ставки</span>
                 </p>
                 <button type="submit" class="button">Сделать ставку</button>
               </form>
