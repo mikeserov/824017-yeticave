@@ -1,8 +1,8 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $value): ?>
+        <?php foreach($categories as $category): ?>
           <li class="nav__item">
-            <a href="all-lots.html"><?= $value['name_ru']; ?></a>
+            <a href="all-lots.html"><?= $category['name_ru']; ?></a>
           </li>
         <?php endforeach; ?>
       </ul>
@@ -21,7 +21,7 @@
           <?php if (isset($_SESSION['user'])): ?>
             <div class="lot-item__state">
               <div class="lot-item__timer timer">
-                <?= $rm_time; ?>
+                <?= $lot_info['remaining_time']; ?>
               </div>
               <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
@@ -29,15 +29,15 @@
                   <span class="lot-item__cost"><?= my_number_format(esc($lot_info['current_price'])); ?></span>
                 </div>
                 <div class="lot-item__min-cost">
-                  Мин. ставка <span><?= my_number_format(esc($lot_info['min_valid_rate'])); ?></span>
+                  Мин. ставка <span><?= my_number_format(esc($lot_info['min_valid_rate'])).' р'; ?></span>
                 </div>
               </div>
-              <form class="lot-item__form" action="lot.php?id=2" method="post">
+              <form class="lot-item__form" action="lot.php?id=<?= $lot_info['id']; ?>" method="post">
                 <?php $classname = empty($error) ? '' : 'form__item--invalid'; ?>
                 <p class="lot-item__form-item form__item <?= $classname; ?>">
                   <label for="cost">Ваша ставка</label>
-                  <input id="cost" type="text" name="cost" placeholder="<?= esc($lot_info['min_valid_rate']); ?>">
-                  <span class="form__error">Введите значение ставки</span>
+                  <input id="cost" type="text" name="cost" placeholder="<?= my_number_format(esc($lot_info['min_valid_rate'])); ?>" value="<?= esc($value); ?>">
+                  <span class="form__error"><?= $error; ?>  </span>
                 </p>
                 <button type="submit" class="button">Сделать ставку</button>
               </form>

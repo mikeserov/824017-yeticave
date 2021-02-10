@@ -4,18 +4,18 @@ INSERT INTO users (email, name, password, avatar_ref, contacts, lot_id, rate_id)
 	VALUES ("iloveMassachusetts@yandex.ru", "Winston", "1234", "img/avatar.jpg", "+79999999999", 2, 1),
 		("iloveNew-York@yandex.ru", "Dave", "4321", "img/avatar_2.jpg", "+79998887700", 3, 2);
 
-INSERT INTO lots (name, description, img_ref, start_price, rate_step, category_id, author)
-	VALUES ("2014 Rossignol District Snowboard", "Супер сноуборд", "img/lot-1.jpg", 10999, 5, 1, 1),
+INSERT INTO lots (name, description, img_ref, start_price, rate_step, category_id, author, dt_end)
+	VALUES ("2014 Rossignol District Snowboard", "Супер сноуборд", "img/lot-1.jpg", 10999, 5, 1, 1, '2021-03-01 00:00:00'),
 		("DC Ply Mens 2016/2017 Snowboard", "Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
 			снег мощным щелчком и четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
             снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
             кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
             просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
-            равнодушным.", "img/lot-2.jpg", 159999, 5, 1, 2),
-		("Крепления Union Contact Pro 2015 года размер L/XL", "Очень подробное описание", "img/lot-3.jpg", 8000, 5, 2, 2),
-		("Ботинки для сноуборда DC Mutiny Charocal", "Очень подробное описание", "img/lot-4.jpg", 10999, 5, 3, 1),
-		("Куртка для сноуборда DC Mutiny Charocal", "Очень подробное описание", "img/lot-5.jpg", 7500, 5, 4, 1),
-		("Маска Oakley Canopy", "Очень подробное описание", "img/lot-6.jpg", 5400, 5, 6, 2);
+            равнодушным.", "img/lot-2.jpg", 159999, 5, 1, 2, '2021-03-01 00:00:00'),
+		("Крепления Union Contact Pro 2015 года размер L/XL", "Очень подробное описание", "img/lot-3.jpg", 8000, 5, 2, 2, '2021-03-01 00:00:00'),
+		("Ботинки для сноуборда DC Mutiny Charocal", "Очень подробное описание", "img/lot-4.jpg", 10999, 5, 3, 1, '2021-03-01 00:00:00'),
+		("Куртка для сноуборда DC Mutiny Charocal", "Очень подробное описание", "img/lot-5.jpg", 7500, 5, 4, 1, '2021-03-01 00:00:00'),
+		("Маска Oakley Canopy", "Очень подробное описание", "img/lot-6.jpg", 5400, 5, 6, 2, '2021-03-01 00:00:00');
 
 INSERT INTO rates (rate, user_id, lot_id)
 	VALUES (190000, 1, 2),

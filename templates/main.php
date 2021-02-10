@@ -28,7 +28,7 @@
                                 <span class="lot__cost"><?= my_number_format(esc($value["price"])); ?><b class="rub">р</b></span>
                             </div>
                             <div class="lot__timer timer">
-                                <?= $rm_time ?>
+                                <?= $value['remaining_time']; ?>
                             </div>
                         </div>
                     </div>

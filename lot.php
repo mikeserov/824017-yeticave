@@ -10,7 +10,7 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 }
 $lot_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $form_error = '';
-
+$val_entered = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!isset($_SESSION['user'])) {
 		exit(show_error('403', 'Недостаточно прав для добавления ставки. Пожалуйста, войдите в учетную запись, чтобы иметь возможность добавить ставку.', $categories));
@@ -27,22 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$new_rate = filter_input(INPUT_POST, 'cost', FILTER_VALIDATE_INT, ['options' => ['min_range' => $min_valid_rate]]);
 			if (!$new_rate) {
 				$form_error = 'Введите целое значение не менее чем мин. ставка';
+				$val_entered = $_POST['cost'];
 			} else {
-				//$sql = "INSERT INTO rates (rate, user_id, lot_id) VALUES (280000, 3, 2)";
-				/*$sql = "SELECT gifs.id, title, path, description, show_count, like_count, users.name FROM gifs "
-                 . "JOIN users ON gifs.user_id = users.id "
-                 . "WHERE category_id = " . $gif['category_id'] . " LIMIT 3";*/
-                 var_dump($sql);
-				//$sql = "INSERT INTO rates (rate, user_id, lot_id) VALUES (280000, 3, 2)";
-				//$res = mysqli_query($link, $sql);
-				;
+				$user_id = $_SESSION['user']['id'];
+				$sql = "INSERT INTO rates (rate, user_id, lot_id) VALUES ('$new_rate', '$user_id', '$lot_id')";
+				$res = mysqli_query($link, $sql);	
 			}
 		}
 	}
 }
-
 $res = mysqli_query($link, 'SELECT l.id, description, name, start_price, img_ref AS URL, c.name_ru AS category, rate_step, rate AS max_rate_added, '
-	.'IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate FROM lots l '
+	."IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
 		.'JOIN categories c ON l.category_id = c.id '
 		.'LEFT JOIN rates ON rates.lot_id = l.id '
 		."WHERE l.id = '$lot_id' "
@@ -53,8 +48,8 @@ if ($lot_id && mysqli_num_rows($res)) {
 	$tpl_data = [
 		'categories' => $categories,
 		'lot_info' => $lot_info,
-		'rm_time' => $rm_time,
-		'error' => $form_error
+		'error' => $form_error,
+		'value' => $val_entered
 	];
 	$tpl_file = 'lot_info.php';
 } else {
