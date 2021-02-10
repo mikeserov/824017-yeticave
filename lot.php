@@ -11,6 +11,7 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 $lot_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $form_error = '';
 $val_entered = '';
+$rt_already_added = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!isset($_SESSION['user'])) {
 		exit(show_error('403', 'Недостаточно прав для добавления ставки. Пожалуйста, войдите в учетную запись, чтобы иметь возможность добавить ставку.', $categories));
@@ -37,19 +38,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 $res = mysqli_query($link, 'SELECT l.id, description, name, start_price, img_ref AS URL, c.name_ru AS category, rate_step, rate AS max_rate_added, '
-	."IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
+	."IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time, author FROM lots l "
 		.'JOIN categories c ON l.category_id = c.id '
 		.'LEFT JOIN rates ON rates.lot_id = l.id '
 		."WHERE l.id = '$lot_id' "
 		.'ORDER BY rate DESC '
 		.' LIMIT 1');
+
 if ($lot_id && mysqli_num_rows($res)) {
 	$lot_info = mysqli_fetch_assoc($res);
+	if (isset($_SESSION['user'])) {
+		$user_id = $_SESSION['user']['id'];
+		$sql = "SELECT * FROM rates WHERE user_id = '$user_id' AND lot_id = '$lot_id'";
+		$res = mysqli_query($link, $sql);
+		$rt_already_added = mysqli_num_rows($res); 
+	}
+	$allow_to_add_rt = isset($_SESSION['user']) && $lot_info['remaining_time'] > 0 && $lot_info['author'] != $_SESSION['user']['id'] && !$rt_already_added;
+	$sql = "SELECT dt_rate_declare, rate, users.name FROM rates JOIN users ON rates.user_id = users.id "
+		."WHERE rates.lot_id = '$lot_id' ORDER BY dt_rate_declare DESC LIMIT 10";
+	$res = mysqli_query($link, $sql);
+	$rates = mysqli_fetch_all($res, MYSQLI_ASSOC);
+	var_dump($rates);
 	$tpl_data = [
 		'categories' => $categories,
 		'lot_info' => $lot_info,
 		'error' => $form_error,
-		'value' => $val_entered
+		'value' => $val_entered,
+		'allow_to_add_rt' => $allow_to_add_rt,
+		'rates' => $rates
 	];
 	$tpl_file = 'lot_info.php';
 } else {

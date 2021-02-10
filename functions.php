@@ -133,3 +133,15 @@ function validateType($value) {
 function getPostVal($name) {
     return filter_input(INPUT_POST, $name);
 }
+
+funcion time_gone ($dt_rate_declare) {
+    date_default_timezone_set("Asia/Yekaterinburg");
+    setlocale(LC_ALL, 'ru_RU');
+    $dt_now = date_create();    
+    $dt_rate_declare = date_create($dt_rate_declare);
+    $dt_diff = date_diff($dt_now, $dt_rate_declare);
+    //$dt_diff = date_interval_format($dt_diff,"%H:%I");
+
+    if ($dt_diff > '59:59')
+    return $time_count;
+}

@@ -1,3 +1,4 @@
 http://phpdemo.ru/?type=php#/example/05/module/4
 
 RESPONSE_CODE_404 ЗАЧЕМ ЭТО ДЕЛАЕТСЯ
+ЗАЧЕМ НУЖЕН FOREIGN KEY;

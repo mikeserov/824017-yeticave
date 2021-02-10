@@ -97,6 +97,5 @@ ON Employee (Employee_Name, Employee_Age)
 
 ALTER TABLE `users` CHANGE COLUMN `PASSWORD` `password` VARCHAR(64);
 
-SELECT IF(JQ.COURSE_ID=0, 'Some Result If True', 'Some Result If False'), OTHER_COLUMNS
-FROM ...
-WHERE ...
+-- ALTER TABLE lots ADD FOREIGN KEY users_id_key (author) REFERENCES users(id);
+добавить foreign key
