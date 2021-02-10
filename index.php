@@ -4,7 +4,7 @@ require_once('data.php');
 $title = 'Главная';
 require_once('init.php');
 $res = mysqli_query($link, "SELECT l.id, l.name, start_price AS price, img_ref AS URL, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
-	. 'JOIN categories c ON l.category_id = c.id '
+	. 'JOIN categories c ON l.category_id = c.id '/*
 	. ORDER BY  DESC   (РЕАЛИЗОВАТЬ К ПОСЛЕДНЕМУ УРОКУ!)*/
 	. 'LIMIT 6');
 $lots = mysqli_fetch_all($res, MYSQLI_ASSOC);
