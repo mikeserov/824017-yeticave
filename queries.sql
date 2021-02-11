@@ -4,7 +4,7 @@ INSERT INTO users (email, name, password, avatar_ref, contacts, lot_id, rate_id)
 	VALUES ("iloveMassachusetts@yandex.ru", "Winston", "1234", "img/avatar.jpg", "+79999999999", 2, 1),
 		("iloveNew-York@yandex.ru", "Dave", "4321", "img/avatar_2.jpg", "+79998887700", 3, 2);
 
-INSERT INTO lots (name, description, img_ref, start_price, rate_step, category_id, author, dt_end)
+INSERT INTO lots (name, description, img, start_price, rate_step, category_id, author, dt_end)
 	VALUES ("2014 Rossignol District Snowboard", "Супер сноуборд", "img/lot-1.jpg", 10999, 5, 1, 1, '2021-03-01 00:00:00'),
 		("DC Ply Mens 2016/2017 Snowboard", "Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
 			снег мощным щелчком и четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот

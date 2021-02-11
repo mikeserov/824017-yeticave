@@ -1,7 +1,6 @@
 <?php
-$title = 'Информация о лоте';
+$title = 'Результаты поиска';
 require_once('functions.php');
-require_once('data.php');
 require_once('init.php');
 if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 	exit(show_error());
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 	}
 }
-$res = mysqli_query($link, 'SELECT l.id, description, name, start_price, img_ref AS URL, c.name_ru AS category, rate_step, rate AS max_rate_added, '
+$res = mysqli_query($link, 'SELECT l.id, description, name, start_price, img AS URL, c.name_ru AS category, rate_step, rate AS max_rate_added, '
 	."IFNULL(rate, start_price) AS current_price, IFNULL(rate + rate_step, start_price + rate_step) AS min_valid_rate, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time, author FROM lots l "
 		.'JOIN categories c ON l.category_id = c.id '
 		.'LEFT JOIN rates ON rates.lot_id = l.id '

@@ -3,7 +3,7 @@ require_once('functions.php');
 require_once('data.php');
 $title = 'Главная';
 require_once('init.php');
-$res = mysqli_query($link, "SELECT l.id, dt_start, l.name, start_price AS price, img_ref AS URL, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
+$res = mysqli_query($link, "SELECT l.id, dt_start, l.name, start_price, img, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
 	. 'JOIN categories c ON l.category_id = c.id '
 	. 'WHERE TIMEDIFF(dt_end, NOW()) > 0 '
 	. 'ORDER BY dt_start DESC ' 

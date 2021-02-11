@@ -17,7 +17,7 @@
             <?php foreach($lots as $value): ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
-                        <img src="<?= esc($value["URL"]); ?>" width="350" height="260" alt="<?= esc($value["name"]) ?>">
+                        <img src="<?= esc($value["img"]); ?>" width="350" height="260" alt="<?= esc($value["name"]) ?>">
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?= esc($value["category"]) ?></span>
@@ -25,7 +25,7 @@
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <span class="lot__cost"><?= my_number_format(esc($value["price"])); ?><b class="rub">р</b></span>
+                                <span class="lot__cost"><?= my_number_format(esc($value['start_price'])); ?><b class="rub">р</b></span>
                             </div>
                             <div class="lot__timer timer">
                                 <?= $value['remaining_time']; ?>

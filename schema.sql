@@ -15,7 +15,7 @@ CREATE TABLE lots (
 	dt_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	name VARCHAR(128),
 	description TEXT(128),
-	img_ref TEXT(128),
+	img TEXT(128),
 	start_price DECIMAL,
 	dt_end TIMESTAMP,
 	rate_step DECIMAL,
@@ -50,3 +50,6 @@ CREATE UNIQUE INDEX rate_id ON rates(id);
 
 CREATE INDEX lot_description ON lots(description(128));
 CREATE INDEX lot_name ON lots(name);
+
+
+CREATE FULLTEXT INDEX name_description ON lots (name, description);
