@@ -18,7 +18,7 @@
           <p class="lot-item__description"><?= esc($lot_info['description']); ?></p>
         </div>
         <div class="lot-item__right">
-          <?php if ($allow_to_add_rt): ?>
+          <?php if ($allow_new_rate): ?>
             <div class="lot-item__state">
               <div class="lot-item__timer timer">
                 <?= $lot_info['remaining_time']; ?>
@@ -44,16 +44,16 @@
             </div>
           <?php endif; ?>
           <div class="history">
-            <h3>История ставок (<span><?= count($rates); ?></span>)</h3>
+            <h3>История ставок (<span><?= mysqli_num_rows($rates); ?></span>)</h3>
             <table class="history__list">
               <?php if ($rates):
-                foreach($rates as $rate): ?>
+                while($rate = mysqli_fetch_assoc($rates)): ?>
                   <tr class="history__item">
                     <td class="history__name"><?= esc($rate['name']); ?></td>
                     <td class="history__price"><?= my_number_format($rate['rate']).' р'; ?></td>
-                    <td class="history__time">5 минут назад</td>
+                    <td class="history__time"><?= time_passed($rate['dt_rate']); ?></td>
                   </tr>
-                <?php endforeach;
+                <?php endwhile;
               endif; ?>
             </table>
           </div>
