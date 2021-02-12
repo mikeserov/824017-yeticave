@@ -9,36 +9,61 @@
     </nav>
     <div class="container">
       <section class="lots">
-        <h2>Результаты поиска по запросу «<span>Union</span>»</h2>
+        <?php $search = esc($search); ?>
+        <h2>Результаты поиска по запросу «<span><?= $search; ?></span>»</h2>
         <ul class="lots__list">
-          <?php foreach($lots as $value): ?>
+          <?php $i = 0;
+          while(($lot = mysqli_fetch_assoc($lots)) && $i < 9): ?>
             <li class="lots__item lot">
               <div class="lot__image">
-                <img src="<?= esc($value['img']); ?>" width="350" height="260" alt="<?= esc($value["name"]) ?>">
+                <img src="<?= esc($lot['img']); ?>" width="350" height="260" alt="<?= esc($lot["name"]); ?>">
               </div>
               <div class="lot__info">
-                <span class="lot__category"><?= esc($value["category"]) ?></span>
-                <h3 class="lot__title"><a class="text-link" href="lot.php?id=<?= $value["id"] ?>"><?= esc($value["name"]) ?></a></h3>
+                <span class="lot__category"><?= esc($lot["category"]); ?></span>
+                <h3 class="lot__title"><a class="text-link" href="lot.php?id=<?= $lot["id"]; ?>"><?= esc($lot["name"]); ?></a></h3>
                 <div class="lot__state">
                   <div class="lot__rate">
                     <span class="lot__amount">Стартовая цена</span>
-                    <span class="lot__cost"><?= my_number_format(esc($value["price"])); ?><b class="rub">р</b></span>
+                    <span class="lot__cost"><?= my_number_format(esc($lot["start_price"])); ?><b class="rub">р</b></span>
                   </div>
                   <div class="lot__timer timer">
-                    <?= $value['remaining_time']; ?>
+                    <?= $lot['remaining_time']; ?>
                   </div>
                 </div>
               </div>
             </li>
-          <?php endforeach; ?>
+          <?php $i++; 
+          endwhile; ?>
         </ul>
       </section>
-      <ul class="pagination-list">
-        <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
-        <li class="pagination-item pagination-item-active"><a>1</a></li>
-        <li class="pagination-item"><a href="#">2</a></li>
-        <li class="pagination-item"><a href="#">3</a></li>
-        <li class="pagination-item"><a href="#">4</a></li>
-        <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
-      </ul>
+      <?php if($pages_count > 1): ?> 
+        <ul class="pagination-list">
+
+          <?php if ($cur_page == 1):
+                  $href = '';
+                else:
+                  $href = 'href=search.php?page=' . ($cur_page - 1) . '&search=' . $search;
+                endif; ?>
+          <li class="pagination-item pagination-item-prev"><a <?= $href; ?>>Назад</a></li>
+              
+          <?php  foreach($pages as $page): ?>
+            <?php if ($page == $cur_page):
+                    $classname = 'pagination-item-active';
+                    $href = '';
+                  else:
+                    $classname = '';
+                    $href = 'href=search.php?page=' . $page . '&search=' . $search;
+                  endif; ?>
+            <li class="pagination-item <?= $classname; ?>"><a <?= $href; ?>><?= $page; ?></a></li>
+          <?php endforeach; ?>
+
+          <?php if ($cur_page == count($pages)):
+                  $href = '';
+                else:
+                  $href = 'href=search.php?page=' . ($cur_page + 1) . '&search=' . $search;
+                endif; ?>
+          <li class="pagination-item pagination-item-next"><a <?= $href; ?>>Вперед</a></li>
+
+        </ul>
+      <?php endif; ?>
     </div>

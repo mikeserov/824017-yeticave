@@ -73,11 +73,9 @@ function show_error ($errno = null, $error = null, $categories = []) {
 
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
-
     if ($data) {
         $types = '';
         $stmt_data = [];
-
         foreach ($data as $value) {
             $type = null;
 
@@ -102,7 +100,6 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
         $func = 'mysqli_stmt_bind_param';
         $func(...$values);
     }
-
     return $stmt;
 }
 

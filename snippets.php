@@ -55,3 +55,64 @@ class User {
 		return false;
 	}
 } 
+
+/*$sql = 'SELECT * FROM lots '
+	. 'WHERE TIMEDIFF(dt_end, NOW()) > 0 AND '
+	. 'WHERE MATCH(name, description) AGAINST(?)';*/
+/*$sql = "SELECT l.id, dt_start, l.name, start_price, img, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
+	. "JOIN categories c ON l.category_id = c.id "
+	. "WHERE TIMEDIFF(dt_end, NOW()) > 0 AND "
+	. "WHERE MATCH(l.name, description) AGAINST(?) "
+	. "ORDER BY dt_start DESC "
+	. "LIMIT 9 OFFSET '$offset'";
+	$stmt = db_get_prepare_stmt($link, $sql, [$search]);
+	mysqli_stmt_execute($stmt);
+	$res =  mysqli_stmt_get_result($stmt);
+	$item_count = mysqli_num_rows($res);*/
+
+
+	     <ul class="pagination-list">
+              <li class="pagination-item pagination-item-prev"><a <?= $cur_page != 1 ? "href='search'" :; ?>>Назад</a></li>
+              <?php  foreach($pages as $page): ?>
+                <?php $iscur_page = $page == $cur_page ? true : false; ?>
+                <li class="pagination-item <?= $iscur_page ? 'pagination-item-active' : ''; ?>"><a <?= $iscur_page ? '' : "href=search.php?page=$page&search=$search; ?>&search=<?= esc($search); ?>" ?>><?= $page; ?></a></li>
+              <?php endforeach; ?>
+              <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
+            <?php endforeach; ?>
+
+
+            //альтернативный вариант
+ <?php if($pages_count > 1): ?> 
+          <ul class="pagination-list">
+              <?php if ($cur_page == 1):
+                     $href = '';
+                    else:
+                      $href = 'href=search.php?page=' . ($cur_page - 1) . '&search=' . esc($search);
+                      ?>
+              <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
+              
+              <?php  foreach($pages as $key => $page): ?>
+
+
+
+                <?php 
+                      if ()
+                if ($page == $cur_page):
+                        $classname = 'pagination-item-active';
+                        $href = '';
+                      else:
+                        $classname = '';
+                        $href = 'href=search.php?page=' . $page . '&search=' . esc($search);
+                      endif; ?>
+                <li class="pagination-item <?= $classname; ?>"><a <?= $href; ?>><?= $page; ?></a></li>
+
+
+
+
+              <?php endforeach; ?>
+
+              <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
+/* ----------------------------------------------------------------------------------------------------------------------------------*/
