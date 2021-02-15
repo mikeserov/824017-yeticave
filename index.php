@@ -1,8 +1,10 @@
 <?php
-require_once('functions.php');
-require_once('data.php');
 $title = 'Главная';
+require_once('vendor/autoload.php');
+require_once('functions.php');
 require_once('init.php');
+require_once('getwinner.php');
+
 $res = mysqli_query($link, "SELECT l.id, dt_start, l.name, start_price, img, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
 	. 'JOIN categories c ON l.category_id = c.id '
 	. 'WHERE TIMEDIFF(dt_end, NOW()) > 0 '
@@ -11,11 +13,11 @@ $res = mysqli_query($link, "SELECT l.id, dt_start, l.name, start_price, img, c.n
 $lots = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $res = mysqli_query($link, 'SELECT * FROM categories');
 $categories = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
 $page_content = include_template('main.php', [
 	'categories' => $categories,
 	'lots' => $lots
 ]);
-
 $layout_content = include_template('layout.php', [
 	'categories' => $categories,
 	'page_content' => $page_content,

@@ -1,0 +1,17 @@
+
+
+
+SELECT r1.rate, r1.lot_id, r1.user_id FROM rates r1
+	JOIN (
+		SELECT lot_id, MAX(rate) AS rate
+		FROM rates
+		GROUP BY lot_id
+	) AS r2
+	ON r1.lot_id = r2.lot_id AND r1.rate = r2.rate;
+	 
+SELECT lots.id, lots.name, dt_end, rate, user_id, users.name FROM lots
+JOIN rates ON rates.lot_id = lots.id
+JOIN users ON rates.user_id = users.id
+  	WHERE winner IS NULL
+ 	 AND dt_end <= NOW();
+ 	
