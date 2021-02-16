@@ -54,7 +54,7 @@ if ($lot_id && mysqli_num_rows($res)) {
 	}
 	$allow_new_rate = isset($_SESSION['user']) && $lot_info['remaining_time'] > 0 && $lot_info['author'] != $_SESSION['user']['id'] && !$rt_already_added;
 	$sql = "SELECT dt_rate, rate, users.name FROM rates JOIN users ON rates.user_id = users.id "
-		."WHERE rates.lot_id = '$lot_id' ORDER BY dt_rate DESC LIMIT 10";
+		."WHERE rates.lot_id = '$lot_id' ORDER BY dt_rate DESC";
 	$rates = mysqli_query($link, $sql);
 	$tpl_data = [
 		'categories' => $categories,
