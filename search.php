@@ -1,7 +1,6 @@
 <?php
 
 require_once('functions.php');
-require_once('data.php');
 require_once('init.php');
 
 if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
@@ -11,7 +10,7 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 }
 
 $search = esc(trim($_GET['search'] ?? ''));
-$title = "Результаты поиска по запросу $search";
+$title = 'Результаты поиска по запросу «' . $search . '»';
 if (!empty($search)) {
 	$sql = "SELECT l.id, dt_start, l.name, start_price, img, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "
 	. "JOIN categories c ON l.category_id = c.id "

@@ -2,7 +2,7 @@
       <ul class="nav__list container">
         <?php foreach($categories as $category): ?>
           <li class="nav__item">
-            <a href="all-lots.html"><?= $category['name_ru']; ?></a>
+            <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
           </li>
         <?php endforeach; ?>
       </ul>
@@ -45,7 +45,7 @@
           <?php if ($cur_page == 1):
                   $href = '';
                 else:
-                  $href = 'href=search.php?page=' . ($cur_page - 1) . '&search=' . $search;
+                  $href = 'href=search.php?page=' . ($cur_page - 1) . '&search=' . urldecode($search);
                 endif; ?>
           <li class="pagination-item pagination-item-prev"><a <?= $href; ?>>Назад</a></li>
               
@@ -55,7 +55,7 @@
                     $href = '';
                   else:
                     $classname = '';
-                    $href = 'href=search.php?page=' . $page . '&search=' . $search;
+                    $href = 'href=search.php?page=' . $page . '&search=' . urldecode($search);
                   endif; ?>
             <li class="pagination-item <?= $classname; ?>"><a <?= $href; ?>><?= $page; ?></a></li>
           <?php endforeach; ?>
@@ -63,7 +63,7 @@
           <?php if ($cur_page == count($pages)):
                   $href = '';
                 else:
-                  $href = 'href=search.php?page=' . ($cur_page + 1) . '&search=' . $search;
+                  $href = 'href=search.php?page=' . ($cur_page + 1) . '&search=' . urldecode($search);
                 endif; ?>
           <li class="pagination-item pagination-item-next"><a <?= $href; ?>>Вперед</a></li>
 

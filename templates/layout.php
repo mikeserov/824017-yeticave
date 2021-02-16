@@ -45,7 +45,7 @@
     </div>
 </header>
 
-<?php if(!isset($main_container)): $main_container = ''; endif; ?>
+<?php isset($main_container) ?: ($main_container = ''); ?>
 <main class="<?= $main_container; ?>">
     <?= $page_content; ?>
 </main>
@@ -54,9 +54,11 @@
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach($categories as $value): ?>
-                <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= $value['name_ru'] ?></a>
+            <?php isset($cur_category) ?: ($cur_category = ''); ?>
+            <?php foreach($categories as $category):
+                $classname = $cur_category == $category['name_ru'] ? 'nav__item--current' : ''; ?>
+                <li class="nav__item <?= $classname; ?>">
+                    <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
