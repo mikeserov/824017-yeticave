@@ -82,3 +82,11 @@ INSERT INTO lots (dt_start, name, description, img, start_price, rate_step, cate
 	(NOW(), "Сноуборд №26", "Очень подробное описание", "img/27.jpg", 21500, 100, 1, 12, '2021-03-01 00:00:00'),
 	(NOW(), "Сноуборд №27", "Очень подробное описание", "img/28.jpg", 12500, 100, 1, 12, '2021-03-01 00:00:00'),
 	(NOW(), "Сноуборд №28", "Очень подробное описание", "img/1.png", 500, 100, 1, 12, '2021-03-01 00:00:00')
+
+
+SELECT dt_rate, rate, rates.lot_id, lots.name, img, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i:%S') AS remaining_time, contacts, categories.name_ru, winner FROM lots 
+		JOIN users ON lots.author = users.id
+		JOIN rates ON lots.id = rates.lot_id
+		JOIN categories ON categories.id = lots.category_id
+		WHERE user_id = 3
+		ORDER BY dt_rate DESC;

@@ -12,9 +12,9 @@
       <table class="rates__list">
 
         <?php foreach ($rates as $rate): ?>
+          <?php if ($rate['remaining_time'] > )
 
-
-
+          <?php $classname =  ? : ?>
           <tr class="rates__item">
             <td class="rates__info">
               <div class="rates__img">
@@ -36,10 +36,9 @@
             </td>
           </tr>
 
-
-
-
         <?php endforeach; ?>
+
+
         <tr class="rates__item">
           <td class="rates__info">
             <div class="rates__img">
