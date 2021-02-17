@@ -1,5 +1,4 @@
 <?php
-
 require_once('functions.php');
 require_once('init.php');
 
@@ -11,6 +10,11 @@ if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 
 $cur_category = esc($_GET['category'] ?? '');
 $title = 'Все лоты в категории «' . $cur_category . '»';
+$tpl_data = [
+	'pages_count' => '',
+	'cur_category' => '',
+	'categories' => $categories
+];
 
 if ($cur_category) {
 	$sql = "SELECT l.id, dt_start, l.name, start_price, img, c.name_ru AS category, TIME_FORMAT(TIMEDIFF(dt_end, NOW()), '%H:%i') AS remaining_time FROM lots l "

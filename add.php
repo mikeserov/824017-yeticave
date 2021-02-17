@@ -1,7 +1,6 @@
 <?php
 $title = 'Добавление лота';
 require_once('functions.php');
-require_once('data.php');
 require_once('init.php');
 if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
 	exit(show_error());
@@ -85,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		]);
 	} else {
 		$id = $_SESSION['user']['id'];
-		$sql = "INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img_ref) "
+		$sql = "INSERT INTO lots (dt_start, author, name, category_id, description, start_price, rate_step, dt_end, img) "
 			. "VALUES (NOW(), '$id', ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = db_get_prepare_stmt($link, $sql, $new_lot);
 		$res = mysqli_stmt_execute($stmt);

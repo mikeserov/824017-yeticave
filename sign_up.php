@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'name' => 'Введите имя',
 		'message' => 'Напишите как с вами связаться'
 	];
-	$errors = [];//попробовать потом выполнить код без этой строки.
+	$errors = [];
 	$form = filter_input_array(INPUT_POST, ['email' => FILTER_DEFAULT, 'password' => FILTER_DEFAULT, 'name' => FILTER_DEFAULT, 'message' => FILTER_DEFAULT], true);
 
 	foreach($form as $key => $value) {

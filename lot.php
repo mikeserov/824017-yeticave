@@ -1,5 +1,5 @@
 <?php
-$title = 'Результаты поиска';
+$title = 'Информация о лоте';
 require_once('functions.php');
 require_once('init.php');
 if(!$res = mysqli_query($link, 'SELECT * FROM categories')) {
@@ -52,7 +52,8 @@ if ($lot_id && mysqli_num_rows($res)) {
 		$res = mysqli_query($link, $sql);
 		$rt_already_added = mysqli_num_rows($res); 
 	}
-	$allow_new_rate = isset($_SESSION['user']) && $lot_info['remaining_time'] > 0 && $lot_info['author'] != $_SESSION['user']['id'] && !$rt_already_added;
+
+	$allow_new_rate = isset($_SESSION['user']) && $lot_info['remaining_time'][0] !== '-' && $lot_info['author'] != $_SESSION['user']['id'] && !$rt_already_added;	
 	$sql = "SELECT dt_rate, rate, users.name FROM rates JOIN users ON rates.user_id = users.id "
 		."WHERE rates.lot_id = '$lot_id' ORDER BY dt_rate DESC";
 	$rates = mysqli_query($link, $sql);

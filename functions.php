@@ -61,11 +61,22 @@ function show_error ($errno = null, $error = null, $categories = []) {
     return $layout_content;
 }
 
+/**
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ *
+ * @param $link mysqli Ресурс соединения
+ * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
+ *
+ * @return mysqli_stmt Подготовленное выражение
+ */
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
+
     if ($data) {
         $types = '';
         $stmt_data = [];
+
         foreach ($data as $value) {
             $type = null;
 
@@ -90,6 +101,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
         $func = 'mysqli_stmt_bind_param';
         $func(...$values);
     }
+
     return $stmt;
 }
 
@@ -143,6 +155,8 @@ function time_passed ($dt_rate) {
             $time_passed = 'Вчера, в ' . date_format($dt_rate, 'H:i');
         } else {
             if ($y || $m || $d) {
+                $time_passed = date_format($dt_rate, 'd.m.y в H:i');
+            } else {
                 if (!$h && !$i) {
                     $time_passed = 'только что';
                 } else {
@@ -152,8 +166,6 @@ function time_passed ($dt_rate) {
                         $time_passed = $i . ' минут' . $minute_endings[$i] . ' назад';
                     }
                 }
-            } else {
-                $time_passed = date_format($dt_rate, 'd.m.y в H:i');
             }
         }
         return $time_passed;

@@ -50,8 +50,8 @@
                 while($rate = mysqli_fetch_assoc($rates)): ?>
                   <tr class="history__item">
                     <td class="history__name"><?= esc($rate['name']); ?></td>
-                    <td class="history__price"><?= my_number_format($rate['rate']).' р'; ?></td>
-                    <td class="history__time"><?= time_passed($rate['dt_rate']); ?></td>
+                    <td class="history__price"><?= my_number_format(esc($rate['rate'])).' р'; ?></td>
+                    <td class="history__time"><?= time_passed(esc($rate['dt_rate'])); ?></td>
                   </tr>
                 <?php endwhile;
               endif; ?>

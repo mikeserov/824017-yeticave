@@ -41,12 +41,6 @@ if ($res && mysqli_num_rows($res) > 0) {
         $message->setBody($msg_content, 'text/html');
 
         $result = $mailer->send($message);
-        if ($result) {
-            echo('Сообщение успешно отправлено пользователю ' . $winner['user_name']);
-        }
-        else {
-            echo('Не удалось сообщению пользователю ' . $winner['user_name']);
-        }
 	}
 }
 

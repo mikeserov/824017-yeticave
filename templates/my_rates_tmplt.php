@@ -27,11 +27,11 @@
 
             <td class="rates__info">
               <div class="rates__img">
-                <img src="<?= $rate['img']; ?>" width="54" height="40" alt="<?= $rate['lot_name']; ?>">
+                <img src="<?= esc($rate['img']); ?>" width="54" height="40" alt="<?= esc($rate['lot_name']); ?>">
               </div>
-              <h3 class="rates__title"><a href="lot.php?id=<?= $rate['lot_id']; ?>"><?= $rate['lot_name']; ?></a></h3>
+              <h3 class="rates__title"><a href="lot.php?id=<?= $rate['lot_id']; ?>"><?= esc($rate['lot_name']); ?></a></h3>
               <?php if ($classname == 'rates__item--win'): ?>
-                <p><?= $rate['contacts']; ?></p>
+                <p><?= esc($rate['contacts']); ?></p>
               <?php endif; ?>
             </td>
 
@@ -63,7 +63,7 @@
             </td>
 
             <td class="rates__price">
-              <?= $rate['rate']; ?>
+              <?= my_number_format(esc($rate['rate'])); ?>
             </td>
 
             <td class="rates__time">
