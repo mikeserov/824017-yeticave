@@ -1,6 +1,6 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $category): ?>
+        <?php foreach ($categories as $category): ?>
           <li class="nav__item">
             <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
           </li>

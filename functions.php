@@ -1,5 +1,6 @@
 <?php
-function include_template($name, $data) {
+function include_template($name, $data)
+{
     $name = 'templates/' . $name;
     $result = '';
     if (!file_exists($name)) {
@@ -12,19 +13,22 @@ function include_template($name, $data) {
     return $result;
 }
 
-function my_number_format ($price_of_a_lot) {
+function my_number_format($price_of_a_lot)
+{
     if ($price_of_a_lot > 1000) {
         $price_of_a_lot = number_format(ceil($price_of_a_lot), 0, ',', ' ');
     }
     return "$price_of_a_lot";
 }
 
-function esc ($str) {
+function esc($str)
+{
     $text = htmlspecialchars($str);
     return $text;
 }
 
-function show_connection_error () {
+function show_connection_error()
+{
     global $title;
     $error_number = 'Ошибка соединения №' . mysqli_connect_errno() . ': ';
     $error_message = mysqli_connect_error();
@@ -42,7 +46,8 @@ function show_connection_error () {
     return $layout_content;
 }
 
-function show_error ($errno = null, $error = null, $categories = []) {
+function show_error($errno = null, $error = null, $categories = [])
+{
     global $link;
     global $title;
     $error_number = 'Ошибка №' . ($errno ?? mysqli_errno($link)) . ': ';
@@ -70,7 +75,8 @@ function show_error ($errno = null, $error = null, $categories = []) {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
+function db_get_prepare_stmt($link, $sql, $data = [])
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($data) {
@@ -82,11 +88,9 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
             if (is_int($value)) {
                 $type = 'i';
-            }
-            else if (is_string($value)) {
+            } elseif (is_string($value)) {
                 $type = 's';
-            }
-            else if (is_double($value)) {
+            } elseif (is_double($value)) {
                 $type = 'd';
             }
 
@@ -105,38 +109,43 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
-function validateLength($value, $min, $max) {
+function validateLength($value, $min, $max)
+{
     if ($value) {
         $len = strlen($value);
-        if($len < $min or $len > $max) {
+        if ($len < $min or $len > $max) {
             return "Значение должно быть от $min до $max символов";
         }
     }
     return null;
 }
 
-function validateCategory($id, $allowed_list) {
+function validateCategory($id, $allowed_list)
+{
     if (!in_array($id, $allowed_list) && isset($id)) {
         return "Указана несуществующая категория";
     }
     return null;
 }
 
-function validateType($value) {
-    if(!is_numeric($value)) {
+function validateType($value)
+{
+    if (!is_numeric($value)) {
         return "Введите значение в числовом формате";
     }
     return null;
 }
 
-function getPostVal($name) {
+function getPostVal($name)
+{
     return filter_input(INPUT_POST, $name);
 }
 
-function time_passed ($dt_rate) {
+function time_passed($dt_rate)
+{
     date_default_timezone_set("Asia/Yekaterinburg");
     setlocale(LC_ALL, 'ru_RU');
-    $dt_now = date_create();  
+    $dt_now = date_create();
     $dt_rate = date_create($dt_rate);
     $dt_diff = date_diff($dt_rate, $dt_now);
 
@@ -170,5 +179,5 @@ function time_passed ($dt_rate) {
         }
         return $time_passed;
     }
-    return;  
+    return;
 }

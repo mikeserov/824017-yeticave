@@ -55,7 +55,7 @@
     <nav class="nav">
         <ul class="nav__list container">
             <?php isset($cur_category) ?: ($cur_category = ''); ?>
-            <?php foreach($categories as $category):
+            <?php foreach ($categories as $category):
                 $classname = $cur_category == $category['name_ru'] ? 'nav__item--current' : ''; ?>
                 <li class="nav__item <?= $classname; ?>">
                     <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>

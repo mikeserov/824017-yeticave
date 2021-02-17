@@ -1,6 +1,6 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $category): ?>
+        <?php foreach ($categories as $category): ?>
           <li class="nav__item">
             <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
           </li>
@@ -47,7 +47,7 @@
             <h3>История ставок (<span><?= mysqli_num_rows($rates); ?></span>)</h3>
             <table class="history__list">
               <?php if ($rates):
-                while($rate = mysqli_fetch_assoc($rates)): ?>
+                while ($rate = mysqli_fetch_assoc($rates)): ?>
                   <tr class="history__item">
                     <td class="history__name"><?= esc($rate['name']); ?></td>
                     <td class="history__price"><?= my_number_format(esc($rate['rate'])).' р'; ?></td>

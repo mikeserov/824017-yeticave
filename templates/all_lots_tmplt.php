@@ -1,6 +1,6 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $category):
+        <?php foreach ($categories as $category):
           $classname = $cur_category == $category['name_ru'] ? 'nav__item--current' : ''; ?>
           <li class="nav__item <?= $classname; ?>">
             <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
@@ -14,7 +14,7 @@
         <?php if ($pages_count): ?>
           <ul class="lots__list">
             <?php $i = 0;
-              while(($lot = mysqli_fetch_assoc($lots)) && $i < 9): ?>
+              while (($lot = mysqli_fetch_assoc($lots)) && $i < 9): ?>
                 <li class="lots__item lot">
                   <div class="lot__image">
                     <img src="<?= esc($lot['img']); ?>" width="350" height="260" alt="<?= esc($lot["name"]); ?>">
@@ -33,14 +33,14 @@
                     </div>
                   </div>
                 </li>
-              <?php $i++; 
+              <?php $i++;
             endwhile; ?>
           </ul>
         <?php else: ?>
           <h3>Лоты в данной категории отсутствуют</h3>
         <?php endif; ?>
       </section>
-      <?php if($pages_count > 1): ?> 
+      <?php if ($pages_count > 1): ?> 
         <ul class="pagination-list">
 
           <?php if ($cur_page == 1):
@@ -50,7 +50,7 @@
                 endif; ?>
           <li class="pagination-item pagination-item-prev"><a <?= $href; ?>>Назад</a></li>
               
-          <?php  foreach($pages as $page): ?>
+          <?php  foreach ($pages as $page): ?>
             <?php if ($page == $cur_page):
                     $classname = 'pagination-item-active';
                     $href = '';

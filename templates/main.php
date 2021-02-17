@@ -2,7 +2,7 @@
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <?php foreach($categories as $value): ?>
+            <?php foreach ($categories as $value): ?>
                 <li class="promo__item promo__item--<?= $value['name_en'] ?>">
                     <a class="promo__link" href="all_lots.php?category=<?= $value['name_ru']; ?>"><?= $value['name_ru'] ?></a>
                 </li>
@@ -14,7 +14,7 @@
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-            <?php foreach($lots as $value): ?>
+            <?php foreach ($lots as $value): ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
                         <img src="<?= esc($value["img"]); ?>" width="350" height="260" alt="<?= esc($value["name"]) ?>">

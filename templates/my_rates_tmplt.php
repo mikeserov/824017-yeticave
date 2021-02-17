@@ -1,6 +1,6 @@
     <nav class="nav">
       <ul class="nav__list container">
-        <?php foreach($categories as $category): ?>
+        <?php foreach ($categories as $category): ?>
           <li class="nav__item">
             <a href="all_lots.php?category=<?= $category['name_ru']; ?>"><?= $category['name_ru']; ?></a>
           </li>
@@ -40,7 +40,7 @@
             </td>
             
             <td class="rates__timer">
-              <?php  
+              <?php
                     if ($is_time_finished):
                       if ($rate['winner'] == $rate['user_id']):
                         $classname = 'timer--win';
@@ -51,7 +51,7 @@
                       endif;
                     else:
                       $isless_than_hour = explode(':', $rate['remaining_time'])[0] === '00' ? true : false;
-                      $timer_message = $rate['remaining_time']; 
+                      $timer_message = $rate['remaining_time'];
                       if ($isless_than_hour):
                         $classname = 'timer--finishing';
                       else:
