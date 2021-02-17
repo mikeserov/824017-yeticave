@@ -24,16 +24,6 @@ function esc ($str) {
     return $text;
 }
 
-/*function remaining_time () {
-    date_default_timezone_set("Asia/Yekaterinburg");
-    setlocale(LC_ALL, 'ru_RU');
-    $time_end = date_create('tomorrow');
-    $time_now = date_create();
-    $time_diff = date_diff($time_end, $time_now);
-    $time_count = date_interval_format($time_diff,"%H:%I:%S");
-    return $time_count;
-} пока не нужно, время до конца торгов расчитывается в запросе SELECT на стороне SQL */
-
 function show_connection_error () {
     global $title;
     $error_number = 'Ошибка соединения №' . mysqli_connect_errno() . ': ';
@@ -137,6 +127,7 @@ function time_passed ($dt_rate) {
     $dt_now = date_create();  
     $dt_rate = date_create($dt_rate);
     $dt_diff = date_diff($dt_rate, $dt_now);
+
     if (!$dt_diff->invert) {
         $minute_endings = [1 => 'у', 2 => 'ы', 3 => 'ы', 4 => 'ы', 5 => '', 6 => '', 7 => '', 8 => '', 9 => '', 10 => '', 11 => '', 12 => '', 13 => '', 14 => '', 15 => '', 16 => '', 17 => '', 18 => '', 19 => '', 20 => '', 21 => 'у', 22 => 'ы', 23 => 'ы', 24 => 'ы', 25 => '', 26 => '', 27 => '', 28 => '', 29 => '', 30 => '', 31 => 'у', 32 => 'ы', 33 => 'ы', 34 => 'ы', 35 => '', 36 => '', 37 => '', 38 => '', 39 => '', 40 => '', 41 => 'у', 42 => 'ы', 43 => 'ы', 44 => 'ы', 45 => '', 46 => '', 47 => '', 48 => '', 49 => '', 50 => '', 51 => 'у', 52 => 'ы', 53 => 'ы', 54 => 'ы', 55 => '', 56 => '', 57 => '', 58 => '', 59 => ''];
         $hour_endings = [1 => '', 2 => 'а', 3 => 'а', 4 => 'а', 5 => 'ов', 6 => 'ов', 7 => 'ов', 8 => 'ов', 9 => 'ов', 10 => 'ов', 11 => 'ов', 12 => 'ов', 13 => 'ов', 14 => 'ов', 15 => 'ов', 16 => 'ов', 17 => 'ов', 18 => 'ов', 19 => 'ов', 20 => 'ов', 21 => '', 22 => 'а', 23 => 'а'];
@@ -145,17 +136,24 @@ function time_passed ($dt_rate) {
         $d = $dt_diff->d;
         $h = $dt_diff->h;
         $i = $dt_diff->i;
-        if ($y || $m || $d) {
-            $time_passed = date_format($dt_rate, 'd.m.y в H:i');
+
+        $dt_yesterday = date_add($dt_now, date_interval_create_from_date_string('yesterday'));
+        
+        if (date_format($dt_yesterday, 'Y-m-d') === date_format($dt_rate, 'Y-m-d')) {
+            $time_passed = 'Вчера, в ' . date_format($dt_rate, 'H:i');
         } else {
-            if (!$h && !$i) {
-                $time_passed = 'только что';
-            } else {
-                if ($h) {
-                    $time_passed = $h . ' час' . $hour_endings[$h] . ' назад';
+            if ($y || $m || $d) {
+                if (!$h && !$i) {
+                    $time_passed = 'только что';
                 } else {
-                    $time_passed = $i . ' минут' . $minute_endings[$i] . ' назад';
+                    if ($h) {
+                        $time_passed = $h . ' час' . $hour_endings[$h] . ' назад';
+                    } else {
+                        $time_passed = $i . ' минут' . $minute_endings[$i] . ' назад';
+                    }
                 }
+            } else {
+                $time_passed = date_format($dt_rate, 'd.m.y в H:i');
             }
         }
         return $time_passed;
