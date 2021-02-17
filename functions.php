@@ -1,4 +1,12 @@
 <?php
+/**
+ * Подключает шаблон страницы и заполняет переданными данными
+ *
+ * @param string $name имя файла шаблона, размещенного в папке /templates
+ * @param array $data массив данных, передаваемых в шаблон
+ *
+ * @return string контент для последующего вывода на экран
+ */
 function include_template($name, $data)
 {
     $name = 'templates/' . $name;
@@ -13,20 +21,40 @@ function include_template($name, $data)
     return $result;
 }
 
-function my_number_format($price_of_a_lot)
+/**
+ * Форматирует число больше 1000 при помощи встроенной функции
+ *
+ * @param int $price число(цена лота) для форматирования
+ *
+ * @return string число, округленное до целого, в виде строки формата 1 000 000
+ */
+function my_number_format($price)
 {
-    if ($price_of_a_lot > 1000) {
-        $price_of_a_lot = number_format(ceil($price_of_a_lot), 0, ',', ' ');
+    if ($price > 1000) {
+        $price = number_format(ceil($price), 0, ',', ' ');
     }
-    return "$price_of_a_lot";
+    return "$price";
 }
 
+/**
+ * Преобразует специальные символы в HTML-сущности при помощи htmlspecialchars
+ * Объявлена с целью сокращения кода
+ * 
+ * @param string $str конвертируемая строка 
+ *
+ * @return string преобразованная строка
+ */
 function esc($str)
 {
     $text = htmlspecialchars($str);
     return $text;
 }
 
+/**
+ * Возвращает контент с информацией об ошибке соединения с БД для вывода на экран.
+ * 
+ * @return string контент для последующего вывода на экран
+ */
 function show_connection_error()
 {
     global $title;
@@ -46,6 +74,15 @@ function show_connection_error()
     return $layout_content;
 }
 
+/**
+ * Возвращает контент с информацией об ошибке выполнения запроса к БД для вывода на экран.
+ *
+ * @param string|int $errno номер ошибки
+ * @param string $error описание ошибки
+ * @param array $categories массив с категориями лотов для отображения в меню, если такой был успешно получен из БД
+ *
+ * @return string контент для последующего вывода на экран
+ */
 function show_error($errno = null, $error = null, $categories = [])
 {
     global $link;
@@ -69,8 +106,8 @@ function show_error($errno = null, $error = null, $categories = [])
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *
- * @param $link mysqli Ресурс соединения
- * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param mysqli $link Ресурс соединения
+ * @param string $sql SQL запрос с плейсхолдерами вместо значений
  * @param array $data Данные для вставки на место плейсхолдеров
  *
  * @return mysqli_stmt Подготовленное выражение
@@ -109,6 +146,16 @@ function db_get_prepare_stmt($link, $sql, $data = [])
     return $stmt;
 }
 
+/**
+ * Проверка длинны строки на соответствие заданным параметрам мин/макс длинны 
+ *
+ * @param string $value валидируемая строка
+ * @param int $min минимальная длинна строки
+ * @param int $max максимальная длинна строки
+ *
+ * @return string|null Возвращает сообщение об ошибке, если длинна строки вне установленных лимитов, либо null в случае 
+ * корректной длинны строки
+ */
 function validateLength($value, $min, $max)
 {
     if ($value) {
@@ -120,6 +167,14 @@ function validateLength($value, $min, $max)
     return null;
 }
 
+/**
+ * Проверяет полученный id категории на наличие в массиве id существующих категорий
+ *
+ * @param int|string $id валидируемый id категории
+ * @param array $allowed_list массив с id существующих категорий
+ *
+ * @return string|null Возвращает сообщение об ошибке выбора категории пользователем, либо null в случае корректного id категории
+ */
 function validateCategory($id, $allowed_list)
 {
     if (!in_array($id, $allowed_list) && isset($id)) {
@@ -128,6 +183,13 @@ function validateCategory($id, $allowed_list)
     return null;
 }
 
+/**
+ * Проверяет, является ли числом введенное в поле значение
+ *
+ * @param string $value валидируемое значение
+ *
+ * @return string|null возвращает сообщение об ошибке, либо null в случае корректного значения
+ */
 function validateType($value)
 {
     if (!is_numeric($value)) {
@@ -136,11 +198,26 @@ function validateType($value)
     return null;
 }
 
+/**
+ * Проверяет, отправлено ли значение с именем поля $name
+ *
+ * @param string $name имя поля
+ *
+ * @return string полученное от пользователя значение в случае успешной валидации, либо null
+ */
 function getPostVal($name)
 {
     return filter_input(INPUT_POST, $name);
 }
 
+/**
+ * Возвращает информацию о количестве времени, истекшего относительно переданной даты, в человекочитаемом формате
+ *
+ * @param string $dt_rate дата объявления ставки
+ *
+ * @return string количество пройденного времени с момента объявления ставки, либо дата объявления ставки, если прошло больше 24
+ * часов/или наступил следующий день
+ */
 function time_passed($dt_rate)
 {
     date_default_timezone_set("Asia/Yekaterinburg");
